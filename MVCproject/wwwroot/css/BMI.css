@@ -1,0 +1,79 @@
+﻿
+@media only screen and (max-width: 380px) and (orientation: portrait) {
+    #bmicalcDiv {
+        max-width: 100%;
+        height: auto;
+        max-height: 70%;
+        
+    }
+}
+
+@media only screen and (max-width:670px) and (orientation: landscape) {
+    #bmicalcDiv {
+        max-width: 100%;
+        width: 100%;
+        height: 80vh;
+        max-height: 80vh;
+    }
+}
+
+@media only screen and (max-width: 395px) and (orientation: portrait) {
+    #bmicalcDiv {
+        max-width: 100%;
+        height: 50vh;
+        max-height: 70%;
+        
+    }
+}
+
+@media only screen and (max-width:845px) and (orientation: landscape) {
+    #bmicalcDiv {
+        max-width: 70vw;
+        width: auto;
+        height: auto;
+        max-height: 80vh;
+        
+    }
+}
+
+@media only screen and (min-width:992px) {
+    #bmicalcDiv {
+        max-width: 30vw;
+        margin-top: 20vh !important;
+    }
+}
+
+#bmiResult {
+    display:none ;
+}
+
+#bmicalcDiv {
+    background-color: #347f83;
+}
+
+.Weight {
+    border-radius: 0.6em;
+}
+
+
+#height {
+    background-color: #ffffff;
+}
+
+#weight {
+    background-color: #ffffff;
+}
+
+html, body {
+    height: 90vh;
+    background-image: url('bmi.jpg');
+    background-position: center center;
+    background-size: cover;
+    opacity: 0.9;
+}
+
+
+
+
+
+    

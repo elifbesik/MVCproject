@@ -1,0 +1,202 @@
+﻿@model MVCproject.Models.BMI_Model
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "BODY MASS INDEX CALCULATOR";
+}
+@section HeadTags{
+    <head>
+        <link rel="stylesheet" href="~/css/BMI.css" />
+    </head>
+
+}
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="container mt-4 d-flex justify-content-center">
+        <div id="bmicalcDiv" class="card p-sm-3 shadow p-3 mb-5 bg-body rounded">
+            <div class="row">
+                <div class="col text-center d-flex justify-content-center">
+                    <h1>BMI CALCULATOR</h1>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="height">Height (Cm) </label>
+                <input type="number" class="form-control" id="height" name="height" placeholder=" ">
+            </div>
+            <div class="form-group">
+                <label for="weight">Weight (Kg)</label>
+                <input type="number" class="form-control" id="weight" name="weight" placeholder=" ">
+            </div>
+            <div class="col-12 d-flex justify-content-end m-1">
+                <input type="button" class="btn btn btn-outline-danger m-1" id="resetButton" onclick="" value="Reset">
+                <input type="button" class="btn btn btn-outline-primary m-1" id="calButton" onclick="" ; value="Calculate">
+            </div>
+
+            <div class="container  d-flex justify-content-center ">
+                <div id="Result" class="Result  ">
+                    <h1 class="text-center" id="bmiResultH">BMI Result:</h1>
+                    <div class="container mt-4 d-flex justify-content-center">
+
+                        @*<div class="row row-cols-4">
+
+                        <div class="card border-danger mb-3 col " style="">
+                        <div class="card-header">Under Weight</div>
+                        <div class="card-body text-danger">
+                        <h5 class="card-title">&#60;18.15</h5>
+                        <p class="card-text">your bmi should be at least 18.15</p>
+                        </div>
+                        </div>
+
+                        <div class="card border-success mb-3 col " style="">
+                        <div class="card-header">Normal</div>
+                        <div class="card-body text-success">
+                        <h5 class="card-title">18.15 - 25 </h5>
+                        <p  class="card-text">your bmi is exactly what it should be</p>
+                        </div>
+                        </div>
+
+                        <div class="card border-warning mb-3 col " style="">
+                        <div class="card-header">Over Weight</div>
+                        <div class="card-body text-warning">
+                        <h5 class="card-title"> 25 - 30 </h5>
+                        <p class="card-text">your bmi is a little bit higher</p>
+                        </div>
+                        </div>
+
+                        <div class="card border-dark mb-3 col " style="">
+                        <div class="card-header">Obesse</div>
+                        <div class="card-body">
+                        <div class="card-body text-dark">
+                        <h5 class="card-title"> &#62;30 </h5>
+                        <p class="card-text">your bmi is a little worrying </p>
+                        </div>
+                        </div>
+                        </div>
+
+                        </div>*@
+
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3">
+                                <div class="card border-danger mb-3 col " style="">
+                                    <div class="card-header">Under Weight</div>
+                                    <div class="card-body text-danger">
+                                        <h5 class="card-title">&#60;18.15</h5>
+                                        <p class="card-text">your bmi should be at least 18.15</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3">
+                                <div class="card border-success mb-3 col " style="">
+                                    <div class="card-header">Normal</div>
+                                    <div class="card-body text-success">
+                                        <h5 class="card-title">18.15 - 25 </h5>
+                                        <p class="card-text">your bmi is exactly what it should be</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3">
+                                <div class="card border-warning mb-3 col " style="">
+                                    <div class="card-header">Over Weight</div>
+                                    <div class="card-body text-warning">
+                                        <h5 class="card-title"> 25 - 30 </h5>
+                                        <p class="card-text">your bmi is a little bit higher</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3">
+                                <div class="card border-dark mb-3 col " style="">
+                                    <div class="card-header">Obesse</div>
+                                    <div class="card-body">
+                                        <div class="card-body text-dark">
+                                            <h5 class="card-title"> &#62;30 </h5>
+                                            <p class="card-text">your bmi is a little worrying </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#calButton").click(function () {
+
+                $('.Weight').css("background-color", "shadow");
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: '@Url.Action("BMIView", "BMI")',
+                        data: {
+                            Weight: $("#weight").val(),
+                            Height: $("#height").val(),
+                        },
+                        success: function (data) {
+                            var result = data.result;
+                            $('#bmiResultH').html('BMI Result:' + data.bmi);
+                            $('#' + result).css("background-color", "shadow");
+
+                        }
+
+
+                    });
+                $("#Result").css('display', 'block');
+            });
+
+            $('#resetButton').click(function () {
+                $("#bmiResultH").css('display', 'none');
+                $("#weight").val('');
+                $("#height").val('');
+
+            })
+        });
+
+    </script>
+    <style>
+        .card {
+            min-width: 105px !important;
+            height: 100%;
+        }
+
+        .card-header {
+            border-bottom: none;
+            min-height: 40px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .card-body {
+            padding: 10px
+        }
+
+        .card-text {
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500
+        }
+
+        .card-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+      /*  @@media (max-width:1772px) and (min-width: 1199px) {
+            .card {
+                min-width: 200px !important;
+            }
+        }*/
+
+    </style>
+} 

@@ -1,0 +1,41 @@
+﻿@model List<MVCproject.Models.AppModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["title"] = "Home";
+}
+@section HeadTags{
+    <head>
+        <link rel="stylesheet" href="~/css/home.css" />
+    </head>
+
+}
+<div class="container">
+    <main role="main" class="pb-3">
+        <div class="row">
+
+            <div class="col row text-center"><h1>SBB Yazılım Park- App Container</h1></div>
+
+        </div>
+        <div class="container">
+            <div class="row row-cols-md-4 row-cols-sm-1 row-cols-1 g-4 ">
+                @foreach (var item in Model)
+                {
+                    <div class="col  h-100">
+                        <div class="card home-card">
+                            <img src="@item.Bg" class="card-img-top img-card" alt="Hollywood Sign on The Hill" />
+                            <div class="card-body" style="background-color:@item.BgColor;">
+                                <h5 class="card-title text-center">@item.Name</h5>
+                                <div class="d-flex justify-content-center">
+                                    <a href="@item.Url" class="btn btn-lg" style="background-color: transparent; border-color: #4800ff;">GO TO APP</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+
+
+    </main>
+</div>/
