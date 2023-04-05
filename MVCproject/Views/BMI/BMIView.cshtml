@@ -18,62 +18,31 @@
                 </div>
             </div>
 
-
-            <div class="form-group">
-                <label for="height">Height (Cm) </label>
-                <input type="number" class="form-control" id="height" name="height" placeholder=" ">
-            </div>
-            <div class="form-group">
-                <label for="weight">Weight (Kg)</label>
-                <input type="number" class="form-control" id="weight" name="weight" placeholder=" ">
-            </div>
-            <div class="col-12 d-flex justify-content-end m-1">
-                <input type="button" class="btn btn btn-outline-danger m-1" id="resetButton" onclick="" value="Reset">
-                <input type="button" class="btn btn btn-outline-primary m-1" id="calButton" onclick="" ; value="Calculate">
-            </div>
+            <form asp-action="Toplama" asp-controller="BMI" method="post">
+                <div class="form-group">
+                    <label for="height">Height (Cm) </label>
+                    <input type="number" class="form-control" id="height" name="height" placeholder=" ">
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight (Kg)</label>
+                    <input type="number" class="form-control" id="weight" name="weight" placeholder=" ">
+                </div>
+                <div class="col-12 d-flex justify-content-end m-1">
+                    <input type="button" class="btn btn btn-outline-danger m-1" id="resetButton" onclick="" value="Reset">
+                    <input type="button" class="btn btn btn-outline-primary m-1" id="calButton" onclick="" ; value="Calculate">
+                </div>
+                <div>
+                    <input type="text" disabled value="@ViewBag.toplam" />
+                    <input type="submit" class="btn btn btn-outline-primary m-1" id="calButton" onclick="" value="topla" />
+                </div>
+            </form>
 
             <div class="container  d-flex justify-content-center ">
                 <div id="Result" class="Result  ">
                     <h1 class="text-center" id="bmiResultH">BMI Result:</h1>
                     <div class="container mt-4 d-flex justify-content-center">
 
-                        @*<div class="row row-cols-4">
 
-                        <div class="card border-danger mb-3 col " style="">
-                        <div class="card-header">Under Weight</div>
-                        <div class="card-body text-danger">
-                        <h5 class="card-title">&#60;18.15</h5>
-                        <p class="card-text">your bmi should be at least 18.15</p>
-                        </div>
-                        </div>
-
-                        <div class="card border-success mb-3 col " style="">
-                        <div class="card-header">Normal</div>
-                        <div class="card-body text-success">
-                        <h5 class="card-title">18.15 - 25 </h5>
-                        <p  class="card-text">your bmi is exactly what it should be</p>
-                        </div>
-                        </div>
-
-                        <div class="card border-warning mb-3 col " style="">
-                        <div class="card-header">Over Weight</div>
-                        <div class="card-body text-warning">
-                        <h5 class="card-title"> 25 - 30 </h5>
-                        <p class="card-text">your bmi is a little bit higher</p>
-                        </div>
-                        </div>
-
-                        <div class="card border-dark mb-3 col " style="">
-                        <div class="card-header">Obesse</div>
-                        <div class="card-body">
-                        <div class="card-body text-dark">
-                        <h5 class="card-title"> &#62;30 </h5>
-                        <p class="card-text">your bmi is a little worrying </p>
-                        </div>
-                        </div>
-                        </div>
-
-                        </div>*@
 
 
                         <div class="row">
@@ -128,6 +97,53 @@
     </div>
 </div>
 
+@*
+   jquery: hızlı, küçük ve zengin özellikli bir javascript kütüphanesidir. çok sayıda tarayıcıda .çalışan kullanımı kolay bir api ile html belglerinde
+            gezinebildiğin, olaylar oluşturabildiğin bir script dilidir.
+            ayrıca ajax gibi yardımcı methodlarla işleri çok daha basit hale getiren çok yönlü ve genişletilebilirfir.
+
+   KOd Yapısı: değişkenler veya tanımlayıcılar $ işaretiyle başlar. $('p') -> sayfadaki tüm paragraflar anlamına gelir.
+
+   jquery belirleyicilrei (seçiciler): jqueryde css secimleri belirlemek için kullanılırlar
+                                       $("#metin") -> id tanımlanmışsa 
+                                       $(".metin") -> class tanımlanmışsa kullanılır.
+
+   OLAYLAR: jqueryde olaylar kullanıcı ile web sayfası arasındaki iletişmdeir.
+
+            1) sayfa ilk yüklendiğinde çalışan olay :
+              $(document.).ready(çalışacak fonksiyonun adı);
+
+              örnek: $(document).ready(MesajGoster);
+                       function MesajGoster(){
+                       alert('hello')
+                       }
+
+            2) anonim olaylar:
+               $(document).ready(function);
+
+               örnek: $(document).ready(function(){
+                      alert('hello');
+                      });
+
+            3) olay yardımcıları: 
+               Click()
+               dblClick()
+               mouseover()
+               focus()
+               keydown()
+
+            4) olay işlemeler:
+               bind()
+               unbind()
+               one()
+               trigger() 
+     
+            5) etkileşim yardımcıları:
+               Hover()
+               Toggle()
+
+   
+*@
 @section scripts {
     <script>
         $(document).ready(function () {
@@ -192,11 +208,11 @@
             font-weight: 500;
         }
 
-      /*  @@media (max-width:1772px) and (min-width: 1199px) {
-            .card {
-                min-width: 200px !important;
-            }
-        }*/
+        /*  @@media (max-width:1772px) and (min-width: 1199px) {
+                    .card {
+                        min-width: 200px !important;
+                    }
+                }*/
 
     </style>
 } 

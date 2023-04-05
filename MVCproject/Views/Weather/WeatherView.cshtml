@@ -1,0 +1,126 @@
+﻿@{
+    ViewData["Title"] = "WEATHER APLICATION";
+}
+@section HeadTags{
+    <head>
+        <link rel="stylesheet" href="~/css/weather.css" />
+    </head>
+}
+
+
+    <div class="container ortala">
+    <div class="row d-flex m-lg-4 m-4 baslık mt-5 ">
+            <div class="col-lg-4 order-0 ">
+                <div id="searchedCityDiv" class="position-relative card card-body row d-flex justify-content ">
+                    <h6 class=" mb-3 card-title text-center position-absolute top-0 start-50 translate-middle-x p-4">The Weather App</h6>
+                <div class="input-group d-flex baslık">
+                        <input type="text" id="form1" class=" form-control w-50 p-3" />
+                        <button type="button" id="searchButton" d-flex class="btn ">search</button>
+                    </div>
+
+                    <div id="searchedCity" class="card  m-1 baslık ">
+                        <div class="card-body">
+                            <div class="row row-cols-2 d-flex">
+                                <div class="col">
+                                    <p class="card-title searchedCity " id="cityNameHeader"></p>
+                                </div>
+                                <div class="col">
+                                    <p class="card-title text-end searchedCity " id="countryName"></p>
+                                </div>
+                            </div>
+                            <h2 class="card-title text-center searchedCity " id="cityTemp"></h2>
+                            <h3 class="card-title text-center searchedCity " id="cityDescription"></h3>
+                            <div class="row row-cold-2 d-flex">
+                                <div class="col">
+                                    <p class="card-text searchedCity " id="cityWindSpeed"></p>
+                                    <p class="card-text searchedCity " id="citySunrise"></p>
+                                    <p class="card-text searchedCity " id="cityCloud"></p>
+                                </div>
+                                <div class="col d-flex justify-content-center">
+                                    <img src="" alt="" id="weatherIconDiv">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            @{
+                var counter = 0;
+            }
+           
+            @foreach (var item in Model)
+            {
+
+                var iconUrl = string.Format("http://openweathermap.org/img/wn/{0}@2x.png", @item.WeatherIcon);
+
+                <div class="col-lg-2 order-1 float-right">
+                    @{
+                        counter++;
+                    }
+                    <div id="staticCityCard" class="card d-flex">
+                        <div class="card-body">
+                            <div class="row row-cols-2 d-flex">
+                                <div class="col">
+                                    <p class="card-title fixedCities ">@item.City</p>
+                                </div>
+                                <div class="col">
+                                    <p class="card-title text-end fixedCities ">@item.Country</p>
+                                </div>
+                            </div>
+                            
+                            <h2 class="card-title text-center fixedCities ">@item.Temp°С</h2>
+                            <p class="card-title text-center fixedCities ">@item.Description</p>
+                            <div class="row row-cols-2 d-flex">
+                                <div class="col">
+                                    <p class="card-text fixedCities " style="margin:0;">@item.WindSpeed m/s</p>
+                                    <p class="card-text fixedCities " style="margin:0;">@item.Humidity %</p>
+                                </div>
+                                <div class="col flex-md-row" style="align-content:center;">
+                                    <img src="@iconUrl" alt="" id="LoopWeatherIconDiv" style="align-content:center;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#searchButton").click(function () {
+                var CityName = $("#form1").val();
+
+                $('#searchedCity').css('display', 'block');
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: 'https://api.openweathermap.org/data/2.5/weather?q=' + CityName + '&units=metric&cnt=1&APPID=86dda7f7115cd98df1ebd4c12a77f348',
+                        success: function (data) {
+                            let unix_timestamp = data.sys.sunrise;
+                            var date = new Date(unix_timestamp * 1000);
+                            var hours = date.getHours();
+                            var minutes = "0" + date.getMinutes();
+                            var seconds = "0" + date.getSeconds();
+                            var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+                            var iconCode = data.weather[0].icon;
+                            var iconUrl = 'http://openweathermap.org/img/wn/' + iconCode + '@@2x.png';
+                            $('#cityNameHeader').html(data.name);
+                            $('#cityTemp').html(parseInt(data.main.temp) + '°С');
+                            $('#cityWindSpeed').html(data.wind.speed + ' m/s');
+                            $('#cityCloud').html(data.clouds.all + ' %'); 
+                            $('#countryName').html(data.sys.country);
+                            $('#cityDescription').html(data.weather[0].description);
+                            $('#weatherIconDiv').attr('src', iconUrl);
+                            $('#weatherIconDiv').attr('alt', iconCode);
+                        }
+                    });
+            });
+        });
+
+    </script>
+    }
+

@@ -1,0 +1,80 @@
+﻿html, body {
+    height: 100vh;
+    background-image: url('quote2.jpg');
+    background-position: center center;
+    background-size: cover;
+    
+    
+}
+
+
+
+@media only screen and (max-width: 380px) and (orientation: portrait) {
+    .quote-card {
+        background-color: #efe8ce;
+        max-width: 60vh;
+    }
+
+    .quote-card-body {
+        background-color: #efe8ce;
+        height: 20vh;
+        max-width: 50vh;
+    }
+}
+
+@media only screen and (max-width:668px) and (orientation: landscape) {
+    .quote-card {
+        background-color: #efe8ce;
+        width: 80vw;
+        max-width: 80vw;
+        height: 80vh;
+        max-height: 80vh;
+    }
+
+    .quote-card-body {
+        background-color: #efe8ce;
+        height: 80%;
+        max-width: 90vw;
+    }
+}
+
+@media only screen and (min-width:992px) and (orientation: landscape) {
+    .quote-card {
+        background-color: #efe8ce;
+        width: 50vw;
+        max-width: 80vw;
+        height: 40vh;
+        max-height: 80vh;
+        margin-top: 20vh;
+    }
+
+    .quote-card-body {
+        background-color: #efe8ce;
+        height: 80vh;
+        max-width: 90vw;
+    }
+    #createquote {
+        background-color: #efe8ce;
+    }
+    p {
+        
+        font-size: 1.875em;
+        font-family: 'Gill Sans';
+        color: #0e0702;
+    }
+    h6 {
+        font-style:italic;
+        font-size: 1.875em;
+        font-family: 'Gill Sans';
+        color: #0e0702;
+    }
+    h3 {
+        
+        font-size: 1.875em;
+        font-family: 'Gill Sans';
+        color: #0e0702;
+    }
+    img{
+        opacity: 0.9;
+    }
+}

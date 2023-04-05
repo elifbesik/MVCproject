@@ -1,0 +1,140 @@
+﻿@model IEnumerable<MVCproject.Models.ToDoModel>
+
+@{
+    ViewData["Title"] = "ToDoView";
+}
+@*view data aynı action metodun aynı sayfasına veri taşımak için kullanılır *@
+
+<section class="vh-100" style="background-color: #e2d5de;">
+    <div class="container py-5 h-100">
+
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+
+                <div class="card" style="border-radius: 15px;">
+                    <div id="alertBox" class="alert alert-success" role="alert" style="display:none;">
+                    </div>
+                    <div class="card-body p-5">
+
+                        <h6 class="mb-3"> Todo List</h6>
+                        <div id="partialDiv">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Add New Todo" id="toDoItemText">
+                                <button class="btn btn-outline-secondary button-addon2" type="submit" onclick=""><i class="bi bi-plus-circle-fill"></i></button>
+
+                            </div>
+                            
+                        </div>
+                        <ul class="list-group  todo-list-div">
+                        <!-- burada boş değilse göster -->
+                       
+                        <li class="list-group-item  todo-list-div todo-list-group-item">
+                            @foreach (var items in Model)
+                            {
+                                if (items?.IsComplete == true)
+                                {
+                                    <p class="toDoText todo-text m-3 text-decoration-line-through" id=@items.Id><input id=@items.Id class="form-check-input me-1 todo-check" type="checkbox" value"" checked=@items?.IsComplete aria-label="..."><button class="align-items-end btn button-delete float-right" id=@items.Id type="submit" onclick=""><i class="bi bi-trash align-items-end"></i></button>@items?.Name</p>
+
+                                }
+                                else
+                                {
+                                    <p class="  toDoText todo-text m-3" id=@items.Id><input id=@items.Id class="form-check-input me-1 todo-check" type="checkbox" value"" checked=@items?.IsComplete aria-label="..."><button class="align-items-end btn button-delete" id=@items.Id type="submit" onclick=""><i class="bi bi-trash align-items-end"></i></button>@items?.Name</p>
+
+                                }
+                            }
+                            </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".button-addon2").click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/ToDo/Add',
+                    data: {
+                        Name: $("#toDoItemText").val(),
+                        IsComplete: false,
+                    },
+                    success: function (response) {
+
+                        $("#toDoItemText").val('');
+                        $('.list-group-item').append(`<p id=${response.id} class="toDoText todo-text m-3"><input id=${response.id} class="form-check-input me-1 todo-check" type="checkbox" onchanged="todoCheck();" value""  aria-label="..." id="checkBox"><button class="btn button-delete" id=${response.id} type="submit" onclick=""><i class="bi bi-trash"></i></button>${response.name}</p>`)
+
+                    }
+
+                }).done(function (msg) {
+                    console.log(msg);
+                    if (msg.length !== 0) {
+
+                        $("#alertBox").html(" notunuz kayıt edildi.");
+                        $("#alertBox").fadeIn();
+                        setTimeout(function () { $("#alertBox").fadeOut(); }, 3000);
+                        $("#TodoULTag").append(msg);
+
+
+                    } else {
+
+                    }
+                });
+            });
+            $(document).on('click', '.button-delete', function () {
+                var elementId = this.id;
+                $.ajax({
+                    type: 'POST',
+                    url: `/ToDo/Delete/${elementId}`,
+                    data: {
+
+                    },
+                    success: function (response) {
+                        $(`input#${elementId}`).remove();
+                        $(`p#${elementId}`).remove();
+                        $(`button#${elementId}`).remove();
+                        
+
+                    }
+                }).done(function (msg) {
+                    console.log(msg);
+                    if (msg.length !== 0) {
+
+                        $("#alertBox").html(" notunuz silindi.");
+                        $("#alertBox").fadeIn();
+                        setTimeout(function () { $("#alertBox").fadeOut(); }, 3000);
+                        $("#TodoULTag").append(msg);
+
+
+                    } else {
+
+                    }
+                });
+            });
+            $(document).on('change', '.todo-check', function () {
+                var elementId = this.id;
+                var checked;
+                if ($(this).is(":checked"))
+                    checked = true;
+                else
+                    checked = false;
+                $(`p#${elementId}`).toggleClass("text-decoration-line-through");
+                $.ajax({
+                    type: 'POST',
+                    url: `/ToDo/Update`,
+                    data: {
+                        Id: elementId,
+                        IsComplete: checked,
+                    },
+                    success: function (response) {
+
+
+                    }
+                });
+            });
+        });
+    </script>
+}
