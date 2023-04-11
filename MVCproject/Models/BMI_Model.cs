@@ -10,6 +10,5 @@
         public int b { get; set; }
         public int topla { get; set; }
 
-
     }
 }
